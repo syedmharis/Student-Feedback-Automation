@@ -11,6 +11,7 @@ To use this script, you'll need Python 3.7 or later installed on your machine, C
 
 ```bash
 pip install playwright
+playwright install
 ```
 
 ## Usage
