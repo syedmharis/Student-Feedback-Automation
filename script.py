@@ -3,7 +3,8 @@ from playwright.async_api import async_playwright, ElementHandle
 
 async def submit_survey(RollNo, Password,user_rating):
     async with async_playwright() as p:
-        forms = '04'
+        # First Form ID
+        forms = '06'
         
         browser = await p.chromium.launch(headless=False)
         page = await browser.new_page()
@@ -15,8 +16,8 @@ async def submit_survey(RollNo, Password,user_rating):
         await page.fill('#txtRegistrationNo_cs', RollNo)
         await page.fill('#txtPassword_m6cs', Password)
 
-        # Wait 2 seconds
-        await asyncio.sleep(2)
+        # Wait 1 seconds
+        await asyncio.sleep(1)
 
         # Submit the login form
         await page.click('#btnlgn')
@@ -45,24 +46,23 @@ async def submit_survey(RollNo, Password,user_rating):
                 radio_button = await page.wait_for_selector(f'#rdo{radio_count}')
                 await radio_button.click()
                 radio_count += 5
-                await asyncio.sleep(0.5) # Add a delay of 0.5 second
+                await asyncio.sleep(0.3) # Add a delay of 0.3 second
 
             # Fill out the text input field
             txt_input = await page.wait_for_selector('#txt296')
-            res1 = 'Sir is always enthusiastic and engaged in the subject matter, which makes it easy for me to stay focused and interested in the class. They also go out of their way to help students outside of class and are always available to answer questions or provide additional resources. Overall, their dedication and commitment to teaching have had a positive impact on my academic success.'
+            res1 = 'Their dedication and commitment to teaching have had a positive impact on my academic success.'
             await txt_input.fill(res1)
             await asyncio.sleep(1) # Add a delay of 1 second
 
             # Fill out the text input field
             txt_input = await page.wait_for_selector('#txt297')
-            res2 = 'I believe that one area of improvement for faculty members could be to provide more detailed and structured feedback on assignments and assessments. Sometimes it can be difficult to understand how to improve without specific and constructive feedback. Additionally, providing more opportunities for students to ask questions and seek clarification can also be helpful in improving the learning experience.'
+            res2 = 'I believe that one area of improvement for faculty members could be to provide more detailed and structured feedback on assignments and assessments.'
             await txt_input.fill(res2)
             await asyncio.sleep(1) # Add a delay of 1 second
 
             # Submit the form
             await page.wait_for_selector('#btnSubmit')
             await page.click('#btnSubmit', delay=1000)  # wait 1 second between mouse down and up events
-
 
             # Wait for the alert to appear and accept it
             alert = await page.wait_for_event('dialog')
@@ -78,7 +78,7 @@ async def submit_survey(RollNo, Password,user_rating):
             # Wait for the success message
             await page.wait_for_selector('#ctl00_ContentPlaceHolder1_TgridSurvey')
 
-            forms = int(forms)+2
+            forms = '{:02d}'.format(int(forms)+2)
 
         # Close the browser
         await browser.close()
