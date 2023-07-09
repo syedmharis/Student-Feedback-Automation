@@ -37,25 +37,25 @@ async def submit_survey(RollNo, Password,user_rating):
 
             # Select the rating for each radio button
             while True:
-                if user_rating.isdigit() and 1052 <= int(user_rating) <= 1054:
+                if user_rating.isdigit() and 735 <= int(user_rating) <= 1054:
                     break
                 else:
                     print("Invalid input. Please enter a number between 1052 and 1054.")
             radio_count = int(user_rating)
-            for i in range(280, 296):
+            for i in range(280, 289):
                 radio_button = await page.wait_for_selector(f'#rdo{radio_count}')
                 await radio_button.click()
                 radio_count += 5
                 await asyncio.sleep(0.3) # Add a delay of 0.3 second
 
             # Fill out the text input field
-            txt_input = await page.wait_for_selector('#txt296')
+            txt_input = await page.wait_for_selector('#txt210')
             res1 = 'Their dedication and commitment to teaching have had a positive impact on my academic success.'
             await txt_input.fill(res1)
             await asyncio.sleep(1) # Add a delay of 1 second
 
             # Fill out the text input field
-            txt_input = await page.wait_for_selector('#txt297')
+            txt_input = await page.wait_for_selector('#txt211')
             res2 = 'I believe that one area of improvement for faculty members could be to provide more detailed and structured feedback on assignments and assessments.'
             await txt_input.fill(res2)
             await asyncio.sleep(1) # Add a delay of 1 second
